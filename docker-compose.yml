@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  focalboard:
+    image: mattermost/focalboard:latest
+    container_name: focalboard
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_DRIVER=postgres
+      - DB_DATASOURCE=postgresql://admindb:t6MzStBSHYdvIJNwYTAla7OO3OTTy2PC@dpg-csot32hu0jms738ph2f0-a.oregon-postgres.render.com/taskdb_i1qf
+    volumes:
+      - focalboard_data:/var/lib/focalboard
+
+  db:
+    image: postgres:13
+    container_name: focalboard_db
+    environment:
+      POSTGRES_USER: admindb
+      POSTGRES_PASSWORD: t6MzStBSHYdvIJNwYTAla7OO3OTTy2PC
+      POSTGRES_DB: taskdb_i1qf
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  focalboard_data:
+  postgres_data:
